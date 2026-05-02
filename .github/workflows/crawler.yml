@@ -10,18 +10,12 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
   crawl:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
@@ -49,14 +43,16 @@ jobs:
       - name: Export finance-app radar feed
         run: python scripts/export_radar_feed.py --input-dir output/news --output-dir _site/radar
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish feed to GitHub Pages branch
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          cd _site
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b gh-pages
+          git add .
+          git commit -m "Update radar feed"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin gh-pages
