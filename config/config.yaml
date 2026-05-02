@@ -40,7 +40,7 @@ app:
 # 详细时间线图请查看 config/timeline.yaml
 # ===============================================================
 schedule:
-  enabled: true                         # 是否启用调度系统
+  enabled: false                        # 是否启用调度系统
   preset: "morning_evening"             # 预设模板名称（见上方说明）
 
 
@@ -77,6 +77,16 @@ platforms:
       name: "抖音"
     - id: "zhihu"
       name: "知乎"
+    - id: "xueqiu"
+      name: "雪球"
+    - id: "jin10"
+      name: "金十数据"
+    - id: "gelonghui"
+      name: "格隆汇"
+    - id: "fastbull"
+      name: "FastBull"
+    - id: "mktnews"
+      name: "MKTNews"
 
 
 
@@ -89,7 +99,7 @@ platforms:
 # max_age_days: 可选，覆盖全局 freshness_filter.max_age_days
 # ===============================================================
 rss:
-  enabled: true                       # 是否启用 RSS 抓取
+  enabled: false                      # 是否启用 RSS 抓取
 
   # 文章新鲜度过滤配置（全局默认值）
   # 过滤掉发布时间超过指定天数的旧文章，避免同一篇文章重复出现在推送中
@@ -178,7 +188,7 @@ report:
 # 5) 这里决定“筛选路径”，不决定 AI 模型（模型在 ai 段）
 # ===============================================================
 filter:
-  method: "ai"                     # 可选: keyword | ai
+  method: "keyword"                # 可选: keyword | ai
 
   # AI 模式标签排序开关（仅 ai 模式生效）
   # true: 按标签优先级排序（来自兴趣描述提取顺序）
@@ -308,7 +318,7 @@ display:
 # • 跑通后再增加多渠道和多账号，排障成本最低
 # ===============================================================
 notification:
-  enabled: true                       # 是否启用通知功能（总开关）
+  enabled: false                      # 是否启用通知功能（总开关）
                                       # ⚠️ 开启调度系统后，此项仍为总开关：
                                       #   false → 永远不推送（无论调度怎么设置）
                                       #   true  → 由调度的 push 字段控制何时推送
@@ -368,7 +378,7 @@ storage:
   formats:
     sqlite: true                      # 主存储（必须启用）
     txt: false                        # 是否生成 TXT 快照
-    html: true                       # 是否生成 HTML 报告（⚠️ 邮件推送或者需要看网页版报告必须设为 true）
+    html: false                       # 是否生成 HTML 报告（⚠️ 邮件推送或者需要看网页版报告必须设为 true）
 
   # 本地存储配置
   local:
@@ -468,7 +478,7 @@ ai:
 # 模型配置见上方 ai 配置段
 # ===============================================================
 ai_analysis:
-  enabled: true                     # 是否启用 AI 分析（总开关）
+  enabled: false                    # 是否启用 AI 分析（总开关）
                                     # ⚠️ 开启调度系统后，此项仍为总开关：
                                     #   false → 永远不分析（无论调度怎么设置）
                                     #   true  → 由调度的 analyze 字段控制何时分析
@@ -527,7 +537,7 @@ ai_analysis:
 # 模型配置见上方 ai 配置段
 # ===============================================================
 ai_translation:
-  enabled: true                    # 是否启用翻译功能
+  enabled: false                   # 是否启用翻译功能
 
   # 翻译目标语言
   # 格式：自然语言描述
